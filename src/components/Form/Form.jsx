@@ -1,5 +1,7 @@
 //модули
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../redux/phonebook/phonebook-actions';
 
 //компоненты
 import Input from '../Input';
@@ -62,4 +64,8 @@ class Form extends Component {
   }
 }
 
-export default Form;
+const mapDispatchToProps = dispatch => ({
+  onSubmit: data => dispatch(actions.addContact(data)),
+});
+
+export default connect(null, mapDispatchToProps)(Form);

@@ -1,6 +1,7 @@
 // модули
 import React, { Component } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+// import { connect } from 'react-redux';
+// import * as actions from '../src/redux/phonebook/phonebook-actions';
 
 //компоненты
 import Container from './components/Container';
@@ -12,53 +13,38 @@ import Filter from './components/Filter';
 // import contacts from './contacts.json';
 
 class App extends Component {
-  state = {
-    contacts: [],
-    filter: '',
-  };
+  // componentDidMount() {
+  //   const contactsSting = localStorage.getItem('contacts');
+  //   const parcedContacts = JSON.parse(contactsSting);
 
-  componentDidMount() {
-    const contactsSting = localStorage.getItem('contacts');
-    const parcedContacts = JSON.parse(contactsSting);
+  //   if (parcedContacts) {
+  //     this.setState({ contacts: parcedContacts });
+  //   }
+  // }
 
-    if (parcedContacts) {
-      this.setState({ contacts: parcedContacts });
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   const { contacts } = this.state;
+  //   if (contacts !== prevState.contacts) {
+  //     localStorage.setItem('contacts', JSON.stringify(contacts));
+  //   }
+  // }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { contacts } = this.state;
-    if (contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    }
-  }
+  // formSubmitHandler = contactData => {
+  //   const { contacts } = this.state;
+  //   const isContactExist = contacts.find(
+  //     ({ name }) => name === contactData.name,
+  //   );
 
-  formSubmitHandler = contactData => {
-    const { contacts } = this.state;
-    const isContactExist = contacts.find(
-      ({ name }) => name === contactData.name,
-    );
+  //   if (!!isContactExist) {
+  //     alert(`${isContactExist.name} is already in contacts`);
+  //     return;
+  //   }
 
-    if (!!isContactExist) {
-      alert(`${isContactExist.name} is already in contacts`);
-      return;
-    }
-
-    const newContact = { ...contactData, id: uuidv4() };
-    this.setState(({ contacts }) => ({
-      contacts: [newContact, ...contacts],
-    }));
-  };
-
-  deleteContact = id => {
-    this.setState(({ contacts }) => ({
-      contacts: contacts.filter(contact => contact.id !== id),
-    }));
-  };
-
-  filterHandler = event => {
-    this.setState({ filter: event.currentTarget.value });
-  };
+  //   const newContact = { ...contactData, id: uuidv4() };
+  //   this.setState(({ contacts }) => ({
+  //     contacts: [newContact, ...contacts],
+  //   }));
+  // };
 
   FilterContacts = () => {
     const { contacts, filter } = this.state;
@@ -71,22 +57,29 @@ class App extends Component {
   };
 
   render() {
-    const { filter } = this.state;
+    // const { filter } = this.state;
 
-    const filtredContacts = this.FilterContacts();
+    // const filtredContacts = this.FilterContacts();
     return (
       <Container>
         <h2 className="Title">Phonebook</h2>
         <Form onSubmit={this.formSubmitHandler} />
         <h2 className="Title">Contacts</h2>
-        <Filter name={filter} onFilterChange={this.filterHandler} />
-        <Contacts
-          contactsItems={filtredContacts}
-          onDeleteContact={this.deleteContact}
-        />
+        <Filter />
+        <Contacts />
       </Container>
     );
   }
 }
 
 export default App;
+
+// const mapStateToProps = state => {
+//   return {}
+// };
+
+// const mapDispatchToProps = dispatch => {
+//   return { someName: () => dispatch(someAction) }
+// };
+
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
